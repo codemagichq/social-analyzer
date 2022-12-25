@@ -7,7 +7,6 @@
 //  -------------------------------------------------------------
 //  contributors list qeeqbox/social-analyzer/graphs/contributors
 //  -------------------------------------------------------------
-
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 const yarg_ = yargs(hideBin(process.argv))
@@ -325,7 +324,7 @@ app.post('/analyze_string', async function (req, res, next) {
       helper.log_to_file_queue(req.body.uuid, '[Done] Checking user profiles normal')
       if (req.body.option.includes('CategoriesStats') || req.body.option.includes('MetadataStats')) {
         helper.log_to_file_queue(req.body.uuid, '[Starting] Generate stats')
-        stats_default = await stats.get_stats(req,user_info_normal.data)
+        stats_default = await stats.get_stats(req, user_info_normal.data)
         helper.log_to_file_queue(req.body.uuid, '[Done] Generate stats')
       }
     }
@@ -503,23 +502,23 @@ app.post('/analyze_string', async function (req, res, next) {
 
     helper.log_to_file_queue(req.body.uuid, '[Finished] Analyzing: ' + req.body.string + ' Task: ' + req.body.uuid)
 
-     /*fs.writeFileSync('./test.json', JSON.stringify({
-     username: username,
-     uuid: temp_uuid,
-     info,
-     ages: ages,
-     table: all_words,
-     common: temp_words,
-     words_info: words_info,
-     user_info_normal: user_info_normal,
-     user_info_advanced: user_info_advanced,
-     user_info_special: user_info_special,
-     names_origins: names_origins,
-     custom_search: custom_search,
-     graph: graph,
-     stats: stats_default,
-     logs: logs
-    }, null, 2) , 'utf-8');*/
+    /*fs.writeFileSync('./test.json', JSON.stringify({
+    username: username,
+    uuid: temp_uuid,
+    info,
+    ages: ages,
+    table: all_words,
+    common: temp_words,
+    words_info: words_info,
+    user_info_normal: user_info_normal,
+    user_info_advanced: user_info_advanced,
+    user_info_special: user_info_special,
+    names_origins: names_origins,
+    custom_search: custom_search,
+    graph: graph,
+    stats: stats_default,
+    logs: logs
+   }, null, 2) , 'utf-8');*/
 
     res.json({
       username: username,
@@ -562,30 +561,30 @@ process.on('unhandledRejection', function (err) {
   helper.verbose && console.log(pe.render(err))
 })
 
-function delete_keys (object, temp_keys) {
+function delete_keys(object, temp_keys) {
   temp_keys.forEach((key) => {
     try {
       delete object[key]
-    } catch (err) {}
+    } catch (err) { }
   })
   return object
 }
 
-function clean_up_item (object, temp_keys_str) {
+function clean_up_item(object, temp_keys_str) {
   delete object.image
-  if (temp_keys_str === '') {} else {
+  if (temp_keys_str === '') { } else {
     Object.keys(object).forEach((key) => {
       try {
         if (!temp_keys_str.includes(key)) {
           delete object[key]
         }
-      } catch (err) {}
+      } catch (err) { }
     })
   }
   return object
 }
 
-function search_and_change (site, _dict) {
+function search_and_change(site, _dict) {
   if (helper.websites_entries.includes(site)) {
     const item = helper.websites_entries.indexOf(site)
     if (item !== -1) {
@@ -594,7 +593,7 @@ function search_and_change (site, _dict) {
   }
 }
 
-async function check_user_cli (argv) {
+async function check_user_cli(argv) {
   let ret = []
   const random_string = Math.random().toString(36).substring(2)
   let temp_options = 'GetUserProfilesFast,FindUserProfilesFast'
@@ -638,7 +637,7 @@ async function check_user_cli (argv) {
         helper.websites_entries[i].selected = 'true'
       })
     }
-    
+
     if (argv.type != 'all') {
       let websites_entries_filtered = helper.websites_entries.filter((item) => item.selected === 'true')
       websites_entries_filtered = websites_entries_filtered.filter((item) => item.type.toLowerCase().includes(argv.type.toLowerCase()))
@@ -656,7 +655,7 @@ async function check_user_cli (argv) {
         }
       })
     }
-    
+
     if (argv.top != 0) {
       let websites_entries_filtered = helper.websites_entries.filter((item) => item.selected === 'true')
       websites_entries_filtered = websites_entries_filtered.filter((item) => item.global_rank !== 0)
@@ -804,7 +803,7 @@ async function check_user_cli (argv) {
   }
 };
 
-async function list_all_websites () {
+async function list_all_websites() {
   const temp_arr = []
   await helper.websites_entries.forEach(item => {
     temp_arr.push(helper.get_site_from_url(item.url))
